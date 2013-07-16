@@ -3,8 +3,7 @@ var express = require('express');
 
 var app = express.createServer(express.logger());
 
-var words = fs.readFileSync(index.html,'utf-8');
-//var words = buf.toString(string);
+var words = fs.readFileSync(index.html,'utf8');
 
 app.get('/', function(request, response) {
   response.send(words);

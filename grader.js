@@ -21,8 +21,8 @@ References:
    - https://developer.mozilla.org/en-US/docs/JSON#JSON_in_Firefox_2
 */
 
-var util = require('util');
 var rest = require('restler');
+var util = require('util');
 var fs = require('fs');
 var program = require('commander');
 var cheerio = require('cheerio');
@@ -39,14 +39,14 @@ var assertFileExists = function(infile) {
 
 var assertUrlExists = function(inUrl) {
   var url = inUrl.toString();
-  if(!validUrl(url)) {
+  if(!UrlTest(url)) {
     console.error('Error: Invalid url');
     process.exit(1);
   }
   return url;
 };
 
-function validUrl(url){
+function UrlTest(url){
   return url.match(/^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/);
 }
 
@@ -71,6 +71,12 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
+var displayHtmlChecks = function(html, checksfile) {
+  var checkJson = checkHtml(html, checksfile);
+  var outJson = JSON.stringify(checkJson, null, 4);
+  console.log(outJson);
+};
+
 var processUrl = function(checksfile) {
   return function(result, response) {
     if (result instanceof Error) {
@@ -84,12 +90,6 @@ var processUrl = function(checksfile) {
       }
     }
   };
-};
-
-var displayHtmlChecks = function(html, checksfile) {
-  var checkJson = checkHtml(html, checksfile);
-  var outJson = JSON.stringify(checkJson, null, 4);
-  console.log(outJson);
 };
 
 if(require.main == module) {

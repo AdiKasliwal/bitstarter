@@ -1,9 +1,9 @@
-var fs =require('fs');
+var fs = require('fs');
 var express = require('express');
 
 var app = express.createServer(express.logger());
 
-words = fs.readFileSync(index.html, encoding String)
+words = fs.readFileSync(index.html, String)
 
 app.get('/', function(request, response) {
   response.send(words);
